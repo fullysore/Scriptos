@@ -1,0 +1,67 @@
+local old = {}
+
+function rawfunc(_type, _name, _amount, _state, _setread)
+    for i, v in pairs(getgc(true)) do
+        if type(v) == _type and rawget(v, _name) then
+            if _setread then
+                setreadonly(v, false)
+            end
+
+            if old[v] == nil then
+                old[v] = {}
+            end
+            if old[v][_name] == nil then
+                old[v][_name] = v[_name]
+            end
+            v[_name] = _state and _amount or old[v][_name]
+
+            if _setread then
+                setreadonly(v, true)
+            end
+        end
+    end
+end
+
+function gcfinder(name)
+    for i,v in pairs(getgc(true)) do
+        if type(v) == "table" then
+            for g, f in pairs(v) do
+                if type(g) == "string" and g:lower():find(name:lower()) then
+                    print("name:",g)
+                    print("value:",f)
+                    print("------")
+                end
+            end
+        elseif type(v) == "function" then
+            for g,f in pairs(v) do
+                local debugname = debug.getinfo(v).name
+                if type(debugname) == "string" and debugname:lower():find(name:lower()) then
+                    print("name:",debugname)
+                    print("value:",f)
+                    print("------")
+                end
+            end
+        end
+    end
+end
+
+function setgc(args)
+    local name = args["Name"]
+    local amount = args["Amount"]
+    local setnew = args["SetNew"]
+    local search = args["Search"]
+    local setread = args["SetReadOnly"]
+    if search then
+        gcfinder(name)
+    else
+        rawfunc("table",name,amount,setnew,setread)
+    end
+end
+
+setgc({ -- tuff!
+    ["Name"] = "Recoil", -- name to search/set
+    ["Amount"] = 0, -- amount to change to
+    ["SetNew"] = true, -- if disable will set to old values
+    ["Search"] = true, -- if disabled will set value
+    ["SetReadOnly"] = false, -- if enabled will make tables writable
+})
