@@ -1718,6 +1718,12 @@ function contains(list, x)
 	return false
 end
 
+inputService.InputBegan:Connect(function(input, gp)
+    if not library.colorpicking and not gp and input.KeyCode == library.menubind then
+        menu.Enabled = not menu.Enabled
+        menu.Visible = menu.Enabled -- or not menu.Visible, depending on your UI
+    end
+end)
 
 function library:createConfig()
     local name = library.flags["config_name"]
