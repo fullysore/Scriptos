@@ -32,7 +32,7 @@ getgenv().library = {
     toInvis = {};
     libColor = Color3.fromRGB(127, 110, 234);
     disabledcolor = Color3.fromRGB(233, 0, 0);
-    menubind = Enum.KeyCode.Insert;
+    menubind = Enum.KeyCode.End;
     blacklisted = {
         Enum.KeyCode.W,
         Enum.KeyCode.A,
