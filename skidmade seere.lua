@@ -850,7 +850,7 @@ end
 				else
 					fill:TweenSize(UDim2.new(0,1,1,0),Enum.EasingDirection.In,Enum.EasingStyle.Sine,0.01)
                 end
-                valuetext.Text = value..args.suffix
+                valuetext.Text = tostring(value) .. (args.suffix or "")
                 library.flags[args.flag] = value
                 if args.risky then
                     text.TextColor3 = Color3.fromRGB(222, 0, 0)
