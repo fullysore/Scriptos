@@ -845,11 +845,24 @@ end
 
             local function updateValue(value)
                 if library.colorpicking then return end
-				if value ~= 0 then
-					fill:TweenSize(UDim2.new(value/args.max,0,1,0),Enum.EasingDirection.In,Enum.EasingStyle.Sine,0.01)
-				else
-					fill:TweenSize(UDim2.new(0,1,1,0),Enum.EasingDirection.In,Enum.EasingStyle.Sine,0.01)
-                end
+				local maxValue = args.max or 100 -- fallback if args.max is missing
+
+if value ~= 0 then
+    fill:TweenSize(
+        UDim2.new(value / maxValue, 0, 1, 0),
+        Enum.EasingDirection.In,
+        Enum.EasingStyle.Sine,
+        0.01
+    )
+else
+    fill:TweenSize(
+        UDim2.new(0, 1, 1, 0),
+        Enum.EasingDirection.In,
+        Enum.EasingStyle.Sine,
+        0.01
+    )
+end
+				
                 valuetext.Text = tostring(value) .. (args.suffix or "")
                 library.flags[args.flag] = value
                 if args.risky then
