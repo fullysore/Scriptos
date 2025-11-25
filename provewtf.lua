@@ -43,16 +43,6 @@ function Library:Create(Class, Properties)
     return Instance
 end
 
-function Library:AddToRegistry(Instance, Properties)
-    local Data = {
-        Instance = Instance,
-        Properties = Properties,
-    }
-    
-    table.insert(Library.Registry, Data)
-    Library.RegistryMap[Instance] = Data
-end
-
 function Library:MakeDraggable(Frame)
     local dragging, dragInput, dragStart, startPos
     
@@ -110,8 +100,6 @@ function Library:CreateWindow(Config)
     end
     
     Config.Title = Config.Title or "prove.wtf"
-    Config.Size = Config.Size or UDim2.new(0, 625, 0, 600)
-    Config.Position = Config.Position or UDim2.new(0.47, 0, 0.5, 0)
     
     local Window = {
         Tabs = {},
@@ -136,8 +124,8 @@ function Library:CreateWindow(Config)
         BorderSizePixel = 0,
         AnchorPoint = Vector2.new(0, 0.5),
         ClipsDescendants = true,
-        Size = Config.Size,
-        Position = Config.Position,
+        Size = UDim2.new(0, 625, 0, 600),
+        Position = UDim2.new(0.47, 0, 0.5, 0),
     })
     
     Library:Create('UICorner', {
@@ -176,8 +164,8 @@ function Library:CreateWindow(Config)
         ZIndex = 0,
     })
     
-    -- Title
-    local TitleLabel = Library:Create('TextLabel', {
+    -- Title Label
+    Library:Create('TextLabel', {
         Parent = Top,
         BackgroundTransparency = 1,
         Position = UDim2.new(0, 18, 0, 1),
@@ -188,7 +176,7 @@ function Library:CreateWindow(Config)
         TextSize = 26,
     })
     
-    -- Tab Container
+    -- Tabs Container
     local TabsFrame = Library:Create('Frame', {
         Name = 'Tabs',
         Parent = Top,
@@ -246,6 +234,7 @@ function Library:CreateWindow(Config)
         Parent = Bottom,
     })
     
+    -- Top extension for bottom bar
     Library:Create('Frame', {
         Parent = Bottom,
         BackgroundColor3 = Library.BackgroundColor,
@@ -254,12 +243,12 @@ function Library:CreateWindow(Config)
         Position = UDim2.new(0, 0, 0.03333, -1),
     })
     
-    -- Bottom Labels
-    local GameLabel = Library:Create('TextLabel', {
+    -- Bottom Game Name Label
+    Library:Create('TextLabel', {
         Parent = Bottom,
         BackgroundTransparency = 1,
         Position = UDim2.new(0, 21, 0, -1),
-        Size = UDim2.new(0, 200, 0, 36),
+        Size = UDim2.new(0, 300, 0, 36),
         Font = Library.Font,
         Text = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name,
         TextColor3 = Library.AccentColor,
@@ -267,11 +256,12 @@ function Library:CreateWindow(Config)
         TextXAlignment = Enum.TextXAlignment.Left,
     })
     
-    local KeybindLabel = Library:Create('TextLabel', {
+    -- Bottom Keybind Label
+    Library:Create('TextLabel', {
         Parent = Bottom,
         BackgroundTransparency = 1,
-        Position = UDim2.new(0, 521, 0, -1),
-        Size = UDim2.new(0, 100, 0, 36),
+        Position = UDim2.new(0, 480, 0, -1),
+        Size = UDim2.new(0, 130, 0, 36),
         Font = Library.Font,
         Text = "Menu: RShift",
         TextColor3 = Library.InactiveColor,
@@ -282,17 +272,14 @@ function Library:CreateWindow(Config)
     Window.Main = Main
     Window.TabsFrame = TabsFrame
     Window.TabGradient = TabGradient
-    Window.GameLabel = GameLabel
-    Window.KeybindLabel = KeybindLabel
     
     function Window:AddTab(Name)
         local Tab = {
             Name = Name,
             Groupboxes = {},
-            LeftSide = nil,
-            RightSide = nil,
         }
         
+        -- Create Tab Button
         local TabButton = Library:Create('TextButton', {
             Name = Name,
             Parent = TabsFrame,
@@ -305,90 +292,48 @@ function Library:CreateWindow(Config)
             AutoButtonColor = false,
         })
         
-        -- Left Groupbox Container
-        local LeftContainer = Library:Create('Frame', {
-            Name = 'Subtab_Left',
+        -- Left Side Container
+        local LeftContainer = Library:Create('ScrollingFrame', {
+            Name = 'Left_' .. Name,
             Parent = Main,
-            BackgroundColor3 = Library.MainColor,
+            BackgroundTransparency = 1,
             BorderSizePixel = 0,
-            Size = UDim2.new(0, 301, 0, 509),
             Position = UDim2.new(0, 6, 0.07833, 0),
+            Size = UDim2.new(0, 301, 0, 509),
+            ScrollBarImageTransparency = 1,
+            CanvasSize = UDim2.new(0, 0, 0, 0),
             Visible = #Window.Tabs == 0,
         })
         
-        Library:Create('UICorner', {
-            CornerRadius = UDim.new(0, 4),
-            Parent = LeftContainer,
-        })
-        
-        Library:Create('UIStroke', {
-            Color = Library.OutlineColor,
-            Parent = LeftContainer,
-        })
-        
-        -- Left Scrolling Frame
-        local LeftScroll = Library:Create('ScrollingFrame', {
-            Parent = LeftContainer,
-            Active = true,
-            BackgroundColor3 = Library.MainColor,
-            BorderSizePixel = 0,
-            Size = UDim2.new(1, 0, 1, 0),
-            ScrollBarImageTransparency = 1,
-            CanvasSize = UDim2.new(0, 0, 0, 0),
-        })
-        
         Library:Create('UIListLayout', {
-            Parent = LeftScroll,
+            Parent = LeftContainer,
             Padding = UDim.new(0, 8),
             FillDirection = Enum.FillDirection.Vertical,
             SortOrder = Enum.SortOrder.LayoutOrder,
         })
         
-        -- Right Containers (Top and Bottom)
-        local RightTopContainer = Library:Create('Frame', {
-            Name = 'Subtab_RightTop',
+        -- Right Side Container
+        local RightContainer = Library:Create('ScrollingFrame', {
+            Name = 'Right_' .. Name,
             Parent = Main,
-            BackgroundColor3 = Library.MainColor,
+            BackgroundTransparency = 1,
             BorderSizePixel = 0,
-            Size = UDim2.new(0, 303, 0, 250),
             Position = UDim2.new(0.52, -9, 0.07833, 0),
+            Size = UDim2.new(0, 310, 0, 509),
+            ScrollBarImageTransparency = 1,
+            CanvasSize = UDim2.new(0, 0, 0, 0),
             Visible = #Window.Tabs == 0,
         })
         
-        Library:Create('UICorner', {
-            CornerRadius = UDim.new(0, 4),
-            Parent = RightTopContainer,
-        })
-        
-        Library:Create('UIStroke', {
-            Color = Library.OutlineColor,
-            Parent = RightTopContainer,
-        })
-        
-        local RightBottomContainer = Library:Create('Frame', {
-            Name = 'Subtab_RightBottom',
-            Parent = Main,
-            BackgroundColor3 = Library.MainColor,
-            BorderSizePixel = 0,
-            Size = UDim2.new(0, 301, 0, 250),
-            Position = UDim2.new(0.4992, 4, 0.50667, 2),
-            Visible = #Window.Tabs == 0,
-        })
-        
-        Library:Create('UICorner', {
-            CornerRadius = UDim.new(0, 4),
-            Parent = RightBottomContainer,
-        })
-        
-        Library:Create('UIStroke', {
-            Color = Library.OutlineColor,
-            Parent = RightBottomContainer,
+        Library:Create('UIListLayout', {
+            Parent = RightContainer,
+            Padding = UDim.new(0, 8),
+            FillDirection = Enum.FillDirection.Vertical,
+            SortOrder = Enum.SortOrder.LayoutOrder,
         })
         
         Tab.LeftContainer = LeftContainer
-        Tab.LeftScroll = LeftScroll
-        Tab.RightTopContainer = RightTopContainer
-        Tab.RightBottomContainer = RightBottomContainer
+        Tab.RightContainer = RightContainer
         Tab.TabButton = TabButton
         
         function Tab:Show()
@@ -397,12 +342,11 @@ function Library:CreateWindow(Config)
             end
             
             LeftContainer.Visible = true
-            RightTopContainer.Visible = true
-            RightBottomContainer.Visible = true
+            RightContainer.Visible = true
             
             Window.CurrentTab = Tab
             
-            -- Update tab indicator
+            -- Animate tab indicator
             local textBounds = TextService:GetTextSize(TabButton.Text, TabButton.TextSize, TabButton.Font, Vector2.new(math.huge, math.huge))
             local buttonAbsPos = TabButton.AbsolutePosition
             local buttonAbsSize = TabButton.AbsoluteSize
@@ -426,29 +370,26 @@ function Library:CreateWindow(Config)
         
         function Tab:Hide()
             LeftContainer.Visible = false
-            RightTopContainer.Visible = false
-            RightBottomContainer.Visible = false
+            RightContainer.Visible = false
         end
         
         function Tab:AddLeftGroupbox(Name)
-            return Tab:CreateGroupbox(Name, LeftScroll)
+            return Tab:CreateGroupbox(Name, LeftContainer)
         end
         
         function Tab:AddRightGroupbox(Name)
-            -- Alternate between top and bottom right containers
-            local container = #Tab.Groupboxes % 2 == 0 and RightTopContainer or RightBottomContainer
-            return Tab:CreateGroupbox(Name, container)
+            return Tab:CreateGroupbox(Name, RightContainer)
         end
         
-        function Tab:CreateGroupbox(Name, Parent)
+        function Tab:CreateGroupbox(Name, ParentContainer)
             local Groupbox = {
                 Name = Name,
-                Container = nil,
             }
             
+            -- Main Groupbox Frame
             local GroupboxFrame = Library:Create('Frame', {
-                Name = 'Groupbox_' .. Name,
-                Parent = Parent,
+                Name = 'Subtab',
+                Parent = ParentContainer,
                 BackgroundColor3 = Library.MainColor,
                 BorderSizePixel = 0,
                 Size = UDim2.new(0, 301, 0, 100),
@@ -464,36 +405,29 @@ function Library:CreateWindow(Config)
                 Parent = GroupboxFrame,
             })
             
-            -- Top bar for groupbox
-            local GroupboxTop = Library:Create('Frame', {
+            -- Top Bar (must have)
+            local TopBar = Library:Create('Frame', {
                 Name = 'top',
                 Parent = GroupboxFrame,
                 BackgroundColor3 = Library.BackgroundColor,
                 BorderSizePixel = 0,
                 Size = UDim2.new(0, 301, 0, 35),
-            })
-            
-            Library:Create('UICorner', {
-                CornerRadius = UDim.new(0, 4),
-                Parent = GroupboxTop,
+                Position = UDim2.new(0, 0, 0, 0),
             })
             
             Library:Create('UIStroke', {
                 Color = Library.OutlineColor,
-                Parent = GroupboxTop,
+                Parent = TopBar,
             })
             
-            -- Bottom extension
-            Library:Create('Frame', {
-                Parent = GroupboxTop,
-                BackgroundColor3 = Library.BackgroundColor,
-                BorderSizePixel = 0,
-                Size = UDim2.new(0, 301, 0, 18),
-                Position = UDim2.new(0, 0, 0.4869, 0),
+            Library:Create('UICorner', {
+                CornerRadius = UDim.new(0, 4),
+                Parent = TopBar,
             })
             
-            local GroupboxLabel = Library:Create('TextLabel', {
-                Parent = GroupboxTop,
+            -- Title Label
+            Library:Create('TextLabel', {
+                Parent = TopBar,
                 BackgroundTransparency = 1,
                 Size = UDim2.new(0, 200, 0, 36),
                 Position = UDim2.new(0, 0, 0, -3),
@@ -505,21 +439,31 @@ function Library:CreateWindow(Config)
                 ZIndex = 2,
             })
             
-            -- Container for elements
+            -- Bottom extension for top bar (must have)
+            Library:Create('Frame', {
+                Name = 'top',
+                Parent = TopBar,
+                BackgroundColor3 = Library.BackgroundColor,
+                BorderSizePixel = 0,
+                Size = UDim2.new(0, 301, 0, 18),
+                Position = UDim2.new(0, 0, 0.4869, 0),
+            })
+            
+            -- ScrollingFrame for content
             local Container = Library:Create('ScrollingFrame', {
                 Parent = GroupboxFrame,
                 Active = true,
                 BackgroundColor3 = Library.MainColor,
                 BorderSizePixel = 0,
                 Position = UDim2.new(0, 0, 0.06876, 0),
-                Size = UDim2.new(1, 0, 0.93, 0),
+                Size = UDim2.new(1, 0, 1, -35),
                 ScrollBarImageTransparency = 1,
                 CanvasSize = UDim2.new(0, 0, 0, 0),
             })
             
             Library:Create('UIListLayout', {
                 Parent = Container,
-                Padding = UDim.new(0, 5),
+                Padding = UDim.new(0, 0),
                 FillDirection = Enum.FillDirection.Vertical,
                 SortOrder = Enum.SortOrder.LayoutOrder,
             })
@@ -531,12 +475,16 @@ function Library:CreateWindow(Config)
                 local contentSize = 0
                 for _, child in pairs(Container:GetChildren()) do
                     if not child:IsA('UIListLayout') and child.Visible then
-                        contentSize = contentSize + child.Size.Y.Offset + 5
+                        contentSize = contentSize + child.Size.Y.Offset
                     end
                 end
                 
                 Container.CanvasSize = UDim2.new(0, 0, 0, contentSize)
-                GroupboxFrame.Size = UDim2.new(0, 301, 0, math.min(contentSize + 50, 509))
+                
+                local Layout = ParentContainer:FindFirstChildOfClass('UIListLayout')
+                if Layout then
+                    ParentContainer.CanvasSize = UDim2.new(0, 0, 0, Layout.AbsoluteContentSize.Y)
+                end
             end
             
             function Groupbox:AddToggle(Idx, Info)
@@ -546,25 +494,26 @@ function Library:CreateWindow(Config)
                     Callback = Info.Callback or function() end,
                 }
                 
-                local ToggleFrame = Library:Create('TextLabel', {
+                -- Toggle Frame (TextLabel with ImageButton)
+                local ToggleLabel = Library:Create('TextLabel', {
                     Parent = Container,
                     BackgroundTransparency = 1,
-                    Size = UDim2.new(0, 109, 0, 30),
+                    Size = UDim2.new(0, 109, 0, 50),
+                    Position = UDim2.new(0.00332, 3, 0, 0),
                     Font = Library.Font,
                     Text = Info.Text or 'Toggle',
                     TextColor3 = Library.InactiveColor,
                     TextSize = 20,
-                    TextXAlignment = Enum.TextXAlignment.Left,
                 })
                 
                 local ToggleButton = Library:Create('ImageButton', {
-                    Parent = ToggleFrame,
-                    BackgroundColor3 = Library.MainColor,
+                    Parent = ToggleLabel,
                     BorderSizePixel = 0,
-                    Size = UDim2.new(0, 15, 0, 15),
-                    Position = UDim2.new(0.12844, -8, 0.34, 0),
                     AutoButtonColor = false,
                     ImageTransparency = 1,
+                    BackgroundColor3 = Library.MainColor,
+                    Size = UDim2.new(0, 15, 0, 15),
+                    Position = UDim2.new(0.12844, -8, 0.34, 0),
                 })
                 
                 Library:Create('UICorner', {
@@ -583,7 +532,7 @@ function Library:CreateWindow(Config)
                     local textColor = Value and Color3.fromRGB(255, 255, 255) or Library.InactiveColor
                     local bgColor = Value and Library.AccentColor or Library.MainColor
                     
-                    TweenService:Create(ToggleFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quad), {
+                    TweenService:Create(ToggleLabel, TweenInfo.new(0.25, Enum.EasingStyle.Quad), {
                         TextColor3 = textColor
                     }):Play()
                     
@@ -615,7 +564,7 @@ function Library:CreateWindow(Config)
                 local Label = Library:Create('TextLabel', {
                     Parent = Container,
                     BackgroundTransparency = 1,
-                    Size = UDim2.new(0, 280, 0, 25),
+                    Size = UDim2.new(0, 290, 0, 25),
                     Font = Library.Font,
                     Text = Text,
                     TextColor3 = Library.InactiveColor,
@@ -629,6 +578,7 @@ function Library:CreateWindow(Config)
                 return {
                     SetText = function(_, NewText)
                         Label.Text = NewText
+                        Groupbox:Resize()
                     end
                 }
             end
@@ -642,7 +592,7 @@ function Library:CreateWindow(Config)
                     Parent = Container,
                     BackgroundColor3 = Library.BackgroundColor,
                     BorderSizePixel = 0,
-                    Size = UDim2.new(0, 280, 0, 30),
+                    Size = UDim2.new(0, 290, 0, 35),
                     Font = Library.Font,
                     Text = Info.Text or 'Button',
                     TextColor3 = Library.FontColor,
@@ -668,6 +618,27 @@ function Library:CreateWindow(Config)
                 return Button
             end
             
+            function Groupbox:AddDivider()
+                local Divider = Library:Create('Frame', {
+                    Parent = Container,
+                    BackgroundColor3 = Library.OutlineColor,
+                    BorderSizePixel = 0,
+                    Size = UDim2.new(0, 290, 0, 2),
+                })
+                
+                Groupbox:Resize()
+            end
+            
+            function Groupbox:AddBlank(Size)
+                local Blank = Library:Create('Frame', {
+                    Parent = Container,
+                    BackgroundTransparency = 1,
+                    Size = UDim2.new(0, 290, 0, Size or 10),
+                })
+                
+                Groupbox:Resize()
+            end
+            
             table.insert(Tab.Groupboxes, Groupbox)
             Groupbox:Resize()
             
@@ -687,7 +658,6 @@ function Library:CreateWindow(Config)
         return Tab
     end
     
-    -- Toggle menu visibility
     function Library:Toggle()
         Main.Visible = not Main.Visible
     end
