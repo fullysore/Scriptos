@@ -1,7 +1,3 @@
--- REASON: Dumbass customer put their library in a request and flexed his non existant security and ended up getting it leaked by himself... 😭
--- The code here is horrendous this is my 2nd library, the added on code was made to suit the old code however I should have just converted to a newer version of my code kind of an oopsie. 
-
--- variables
 	local uis = cloneref(game:GetService("UserInputService"))
 	local players = cloneref(game:GetService("Players"))
 	local ws = cloneref(game:GetService("Workspace"))
