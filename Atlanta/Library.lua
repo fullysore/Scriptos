@@ -1770,6 +1770,7 @@
 					rgbkey(1, rgb(167, 167, 167))
 				}
 			})
+	end
 			
 			function cfg.change_text(input)
 				text.Text = "  ".. input .."  "
