@@ -1524,7 +1524,7 @@
 
 			-- main window
 				local main_window = library:panel({
-					name = properties and properties.name or "Atlanta | ", 
+					name = properties and properties.name or "Sonder | ", 
 					size = dim2(0, 604, 0, 628),
 					position = dim2(0, (camera.ViewportSize.X / 2) - 302 - 96, 0, (camera.ViewportSize.Y / 2) - 421 - 12),
 					image = "rbxassetid://98823308062942",
@@ -1784,7 +1784,6 @@
 			cfg.change_text(cfg.default)
 
 			return cfg 
-        end
 		end
 
 		function library:refresh_notifications()  	
@@ -5364,6 +5363,7 @@
 			cfg.labels.uid = self:label({name = "User Id: ??"})
 
 			return setmetatable(cfg, library)
+        end
 		end 
 	-- 
 -- 
