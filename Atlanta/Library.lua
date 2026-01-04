@@ -1770,7 +1770,7 @@
 					rgbkey(1, rgb(167, 167, 167))
 				}
 			})
-	end
+	
 			
 			function cfg.change_text(input)
 				text.Text = "  ".. input .."  "
@@ -1784,7 +1784,7 @@
 			cfg.change_text(cfg.default)
 
 			return cfg 
-
+        end
 		end
 
 		function library:refresh_notifications()  	
