@@ -1,6 +1,3 @@
--- REASON: Dumbass customer put their library in a request and flexed his non existant security and ended up getting it leaked by himself... 😭
--- The code here is horrendous this is my 2nd library, the added on code was made to suit the old code however I should have just converted to a newer version of my code kind of an oopsie. 
-
 -- variables
 	local uis = cloneref(game:GetService("UserInputService"))
 	local players = cloneref(game:GetService("Players"))
@@ -1624,6 +1621,111 @@
 				library:make_resizable(items.main_holder) 
 			-- 
 
+			-- theming 
+				local style = library:panel({
+					name = "Style", 
+					anchor_point = vec2(0, 0),
+					size = dim2(0, 394, 0, 464),
+					position = dim2(0, main_window.items.main_holder.AbsolutePosition.X + main_window.items.main_holder.AbsoluteSize.X + 2, 0, main_window.items.main_holder.AbsolutePosition.Y),
+					image = "rbxassetid://115194686863276",
+				})
+
+				local watermark = library:watermark({default = os.date('Atlanta |  - %b %d %Y - %H:%M:%S')})  
+
+				task.spawn(function()
+					while task.wait(1) do 
+						watermark.change_text(os.date('Atlanta - Beta - %b %d %Y - %H:%M:%S'))
+					end 
+				end) 
+
+				local items = style.items
+
+				local column = setmetatable(items, library):column() 
+				local section = column:section({name = "Theme"})
+				section:label({name = "Accent"})
+				:colorpicker({name = "Accent", color = themes.preset.accent, flag = "accent", callback = function(color, alpha)
+					library:update_theme("accent", color)
+				end, flag = "Accent"})
+				section:label({name = "Contrast"})
+				:colorpicker({name = "Low", color = themes.preset.low_contrast, flag = "low_contrast", callback = function(color)
+					if (flags["high_contrast"] and flags["low_contrast"]) then 
+						library:update_theme("contrast", rgbseq{
+							rgbkey(0, flags["low_contrast"].Color),
+							rgbkey(1, flags["high_contrast"].Color)
+						})
+					end 
+
+					library:update_theme("low_contrast", flags["low_contrast"].Color)
+				end})
+				:colorpicker({name = "High", color = themes.preset.high_contrast, flag = "high_contrast", callback = function(color)
+					library:update_theme("contrast", rgbseq{
+						rgbkey(0, flags["low_contrast"].Color),
+						rgbkey(1, flags["high_contrast"].Color)
+					})
+
+					library:update_theme("high_contrast", flags["high_contrast"].Color)
+				end})
+				section:label({name = "Inline"})
+				:colorpicker({name = "Inline", color = themes.preset.inline, callback = function(color, alpha)
+					library:update_theme("inline", color)
+				end, flag = "Inline"})
+				section:label({name = "Outline"})
+				:colorpicker({name = "Outline", color = themes.preset.outline, callback = function(color, alpha)
+					library:update_theme("outline", color)
+				end, flag = "Outline"})
+				section:label({name = "Text Color"})
+				:colorpicker({name = "Main", color = themes.preset.text, callback = function(color, alpha)
+					library:update_theme("text", color)
+				end, flag = "Main"})
+				:colorpicker({name = "Outline", color = themes.preset.text_outline, callback = function(color, alpha)
+					library:update_theme("text_outline", color)
+				end, flag = "Outline"})
+				section:label({name = "Glow"})
+				:colorpicker({name = "Glow", color = themes.preset.glow, callback = function(color, alpha)
+					library:update_theme("glow", color)
+				end, flag = "Glow"})
+				section:slider({name = "Blur Size", flag = "Blur Size", min = 0, max = 56, default = 15, interval = 1, callback = function(int)
+					if window.opened then 
+						blur.Size = int
+					end
+				end})
+				local section = column:section({name = "Other"})
+				section:label({name = "UI Bind"})
+				:keybind({callback = window.set_menu_visibility, key = Enum.KeyCode.Insert})
+				section:toggle({name = "Keybind List", flag = "keybind_list", callback = function(bool)
+					library.keybind_list_frame.Visible = bool
+				end})
+				section:toggle({name = "Watermark", flag = "watermark", callback = function(bool)
+					watermark.set_visible(bool)
+				end})
+				section:button_holder({})
+				section:button({name = "Copy JobId", callback = function()
+					setclipboard(game.JobId)
+				end})
+				section:button_holder({})
+				section:button({name = "Copy GameID", callback = function()
+					setclipboard(game.GameId)
+				end})
+				section:button_holder({})
+				section:button({name = "Copy Join Script", callback = function()
+					setclipboard('game:GetService("TeleportService"):TeleportToPlaceInstance(' .. game.PlaceId .. ', "' .. game.JobId .. '", game.Players.LocalPlayer)')
+				end})
+				section:button_holder({})
+				section:button({name = "Rejoin", callback = function()
+					game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, lp)
+				end})
+				section:button_holder({})
+				section:button({name = "Join New Server", callback = function()
+					local apiRequest = game:GetService("HttpService"):JSONDecode(game:HttpGetAsync("https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100"))
+					local data = apiRequest.data[random(1, #apiRequest.data)]
+						
+					if data.playing <= flags["max_players"] then 
+						game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, data.id)
+					end 
+				end})
+				section:slider({name = "Max Players", flag = "max_players", min = 0, max = 40, default = 15, interval = 1})
+			-- 
+	
 			-- cfg holder
 				local holder = library:panel({
 					name = "Configurations", 
