@@ -109,7 +109,7 @@
 	["low_contrast"] = hex("#120B15"), -- lighter contrast (panels/grids)
 	["text"] = hex("#F3EDFF"),         -- pale text for readability
 	["text_outline"] = rgb(0, 0, 0),   -- keeps text legible against glows
-	["glow"] = hex("#C4B5FD"),         -- soft glow for accents
+	["glow"] = hex("#A78BFA"),         -- soft glow for accents
 },
 
 		utility = {
