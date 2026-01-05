@@ -1964,7 +1964,7 @@ do
             Min = Info.Min;
             Max = Info.Max;
             Rounding = Info.Rounding;
-            MaxSize = 232;
+            MaxSize = 292;
             Type = 'Slider';
             Callback = Info.Callback or function(Value) end;
         };
@@ -3633,4 +3633,5 @@ Players.PlayerAdded:Connect(OnPlayerChange);
 Players.PlayerRemoving:Connect(OnPlayerChange);
 
 getgenv().Library = Library
+
 return Library
