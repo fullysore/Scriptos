@@ -1,3 +1,7 @@
+-- REASON: Dumbass customer put their library in a request and flexed his non existant security and ended up getting it leaked by himself... 😭
+-- The code here is horrendous this is my 2nd library, the added on code was made to suit the old code however I should have just converted to a newer version of my code kind of an oopsie. 
+
+-- variables
 	local uis = cloneref(game:GetService("UserInputService"))
 	local players = cloneref(game:GetService("Players"))
 	local ws = cloneref(game:GetService("Workspace"))
@@ -1524,7 +1528,7 @@
 
 			-- main window
 				local main_window = library:panel({
-					name = properties and properties.name or "Sonder | ", 
+					name = properties and properties.name or "Atlanta | ", 
 					size = dim2(0, 604, 0, 628),
 					position = dim2(0, (camera.ViewportSize.X / 2) - 302 - 96, 0, (camera.ViewportSize.Y / 2) - 421 - 12),
 					image = "rbxassetid://98823308062942",
@@ -1679,6 +1683,8 @@
 						blur:Destroy()
 					end})
 			-- 
+			return setmetatable(window, library)
+		end
 
 		function library:watermark(options) 
 			local cfg = {
@@ -1770,7 +1776,6 @@
 					rgbkey(1, rgb(167, 167, 167))
 				}
 			})
-	
 			
 			function cfg.change_text(input)
 				text.Text = "  ".. input .."  "
@@ -1784,6 +1789,7 @@
 			cfg.change_text(cfg.default)
 
 			return cfg 
+
 		end
 
 		function library:refresh_notifications()  	
@@ -5363,9 +5369,8 @@
 			cfg.labels.uid = self:label({name = "User Id: ??"})
 
 			return setmetatable(cfg, library)
-        end
 		end 
 	-- 
 -- 
 
-return library, themes; 
+return library, themes;
