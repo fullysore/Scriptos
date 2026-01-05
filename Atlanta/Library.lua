@@ -105,14 +105,14 @@
 
 	local themes = {
 		preset = {
-			["outline"] = hex("#0B0814"),      -- deep neutral (outer frame)
-			["inline"] = hex("#14111B"),       -- panel background (slightly lighter)
-			["accent"] = hex("#A78BFA"),       -- soft purple accent (buttons, highlights)
-			["high_contrast"] = hex("#08050A"),-- darkest contrast (inner shadows)
-			["low_contrast"] = hex("#120B15"), -- lighter contrast (panels/grids)
-			["text"] = hex("#F3EDFF"),         -- pale text for readability
+			["outline"] = hex("#0B1220"),      -- deep neutral (outer frame)
+			["inline"] = hex("#0F1724"),       -- panel background (slightly lighter)
+			["accent"] = hex("#3B82F6"),       -- clean blue accent (buttons, highlights)
+			["high_contrast"] = hex("#071028"),-- darkest contrast (inner shadows)
+			["low_contrast"] = hex("#0B1530"), -- lighter contrast (panels/grids)
+			["text"] = hex("#E6EEF3"),         -- pale text for high readability
 			["text_outline"] = rgb(0, 0, 0),   -- keeps text legible against glows
-			["glow"] = hex("#C4B5FD"),         -- soft glow for accents
+			["glow"] = hex("#60A5FA"),         -- soft blue glow for accents
 		},
 
 		utility = {
