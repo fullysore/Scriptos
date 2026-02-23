@@ -1398,7 +1398,7 @@ local Library do
                     Text = "",
                     AutoButtonColor = false,
                     BackgroundTransparency = 1,
-                    Size = UDim2New(1, 0, 0, 20),
+                    Size = UDim2New(0, 0, 0, 20),
                     BorderSizePixel = 2,
                     AutomaticSize = Enum.AutomaticSize.X,
                     TextSize = 14,
@@ -4562,9 +4562,7 @@ local Library do
                     Parent = Items["List"].Instance,
                     Name = "\0",
                     Padding = UDimNew(0, 2),
-                    SortOrder = Enum.SortOrder.LayoutOrder,
-					FillDirection = Enum.FillDirection.Horizontal,
-    				HorizontalFlex = Enum.UIFlexAlignment.Fill									
+                    SortOrder = Enum.SortOrder.LayoutOrder									
 														
                 })
 
@@ -4641,7 +4639,7 @@ local Library do
                     BorderSizePixel = 0,
                     BackgroundTransparency = 1,
                     TextXAlignment = Enum.TextXAlignment.Left,
-                    Size = UDim2New(1, 0, 0, 20),
+                    Size = UDim2New(0, 0, 0, 20),
                     ZIndex = 1,
                     TextSize = 9,
                     BackgroundColor3 = FromRGB(255, 255, 255)
