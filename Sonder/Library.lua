@@ -1398,7 +1398,7 @@ local Library do
                     Text = "",
                     AutoButtonColor = false,
                     BackgroundTransparency = 1,
-                    Size = UDim2New(0, 0, 0, 20),
+                    Size = UDim2New(1, 0, 0, 20),
                     BorderSizePixel = 2,
                     AutomaticSize = Enum.AutomaticSize.X,
                     TextSize = 14,
@@ -4563,6 +4563,9 @@ local Library do
                     Name = "\0",
                     Padding = UDimNew(0, 2),
                     SortOrder = Enum.SortOrder.LayoutOrder
+					FillDirection = Enum.FillDirection.Horizontal,
+    				HorizontalFlex = Enum.UIFlexAlignment.Fill									
+														
                 })
 
                 Instances:Create("UIPadding", {
