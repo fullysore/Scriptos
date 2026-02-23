@@ -4562,7 +4562,7 @@ local Library do
                     Parent = Items["List"].Instance,
                     Name = "\0",
                     Padding = UDimNew(0, 2),
-                    SortOrder = Enum.SortOrder.LayoutOrder
+                    SortOrder = Enum.SortOrder.LayoutOrder,
 					FillDirection = Enum.FillDirection.Horizontal,
     				HorizontalFlex = Enum.UIFlexAlignment.Fill									
 														
