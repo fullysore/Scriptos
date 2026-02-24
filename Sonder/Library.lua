@@ -1400,7 +1400,6 @@ local Library do
                     BackgroundTransparency = 1,
                     Size = UDim2New(0, 0, 0, 20),
                     BorderSizePixel = 2,
-                    AutomaticSize = Enum.AutomaticSize.X,
                     TextSize = 14,
                     BackgroundColor3 = FromRGB(25, 30, 26)
                 })  Items["Inactive"]:AddToTheme({BackgroundColor3 = "Page Background", BorderColor3 = "Border"})
@@ -1530,6 +1529,19 @@ local Library do
                     })
 
                     SubPage.ColumnsData[Index] = NewColumn
+                end
+
+                local Count = 0
+                for i,v in Data.Page.Items["SubPages"].Instance:GetChildren() do
+                    if (v:IsA("TextButton")) then
+                        Count += 1
+                    end
+                end
+
+                for i,v in Data.Page.Items["SubPages"].Instance:GetChildren() do
+                    if (v:IsA("TextButton")) then
+                        v.Size = UDim2New(1 / Count, 0, 0, 20)
+                    end
                 end
             end
 
