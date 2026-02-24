@@ -1540,7 +1540,7 @@ local Library do
 
                 for i,v in Data.Page.Items["SubPages"].Instance:GetChildren() do
                     if (v:IsA("TextButton")) then
-                        v.Size = UDim2New(1 / Count, 0, 0, 20)
+                        v.Size = UDim2New(0.945 / Count, 0, 0, 20)
                     end
                 end
             end
