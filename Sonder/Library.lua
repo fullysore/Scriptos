@@ -226,7 +226,7 @@ local Library do
             ["Inline"] = FromRGB(20, 24, 21),
             ["Hovered Element"] = FromRGB(37, 42, 45),
             ["Page Background"] = FromRGB(25, 30, 26),
-            ["Outline"] = FromRGB(202, 243, 255),
+            ["Outline"] = FromRGB(78, 96, 102),
             ["Element"] = FromRGB(30, 36, 31),
             ["Gradient"] = FromRGB(208, 208, 208),
             ["Text"] = FromRGB(235, 235, 235),
