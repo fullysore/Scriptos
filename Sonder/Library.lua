@@ -1532,13 +1532,13 @@ local Library do
                 end
 
                 local Count = 0
-                for i,v in Data.Page.Items["SubPages"].Instance:GetChildren() do
+                for i, v in Data.Page.Items["SubPages"].Instance:GetChildren() do
                     if (v:IsA("TextButton")) then
                         Count += 1
                     end
                 end
 
-                for i,v in Data.Page.Items["SubPages"].Instance:GetChildren() do
+                for i, v in Data.Page.Items["SubPages"].Instance:GetChildren() do
                     if (v:IsA("TextButton")) then
                         v.Size = UDim2New(0.945 / Count, 0, 0, 20)
                     end
@@ -1710,7 +1710,7 @@ local Library do
                     Name = "\0",
                     BorderColor3 = FromRGB(0, 0, 0),
                     BackgroundTransparency = 1,
-                    Position = (Items["SubElements"] and #Items["SubElements"]:GetChildren() >= 1) and UDim2.new(0, -123, 0, 0) or UDim2.new(0, 215, 0, 0),
+                    Position = (Items["Text"].Instance and #Items["Text"].Instance:GetChildren() >= 1) and UDim2.new(0, -123, 0, 0) or UDim2.new(0, 215, 0, 0),
                     Size = UDim2New(0, 0, 1, 0),
                     BorderSizePixel = 0,
                     AutomaticSize = Enum.AutomaticSize.X,
