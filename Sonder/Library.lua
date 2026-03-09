@@ -4806,7 +4806,7 @@ local Library do
                 Parent = Library.Holder.Instance,
                 Name = "\0",
                 AnchorPoint = Vector2New(0.5, 1),
-                Position = UDim2New(0.5, 0, 1, -12),
+                Position = UDim2New(0.5, -830, 1, -920),
                 BorderColor3 = FromRGB(12, 12, 12),
                 BorderSizePixel = 2,
                 AutomaticSize = Enum.AutomaticSize.XY,
