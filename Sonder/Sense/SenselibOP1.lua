@@ -653,33 +653,33 @@ function EspInterface.AddInstance(instance, options)
 end
 
 function EspInterface.Load()
-	assert(not EspInterface._hasLoaded, "Esp has already been loaded.");
+	assert(not EspInterface._hasLoaded, "Esp has already been loaded.")
 
-	local function createObject(player)
-		EspInterface._objectCache[player] = {
-			EspObject.new(player, EspInterface),
-			ChamObject.new(player, EspInterface)
-		};
+	local function createObject(model)
+		if not model:IsA("Model") or model == localViewmodel then return end
+		EspInterface._objectCache[model] = {
+			EspObject.new(model, EspInterface),
+			ChamObject.new(model, EspInterface)
+		}
 	end
 
-	local function removeObject(player)
-		local object = EspInterface._objectCache[player];
+	local function removeObject(model)
+		local object = EspInterface._objectCache[model]
 		if object then
 			for i = 1, #object do
-				object[i]:Destruct();
+				object[i]:Destruct()
 			end
-			EspInterface._objectCache[player] = nil;
+			EspInterface._objectCache[model] = nil
 		end
 	end
 
-	local plrs = players:GetPlayers();
-	for i = 2, #plrs do
-		createObject(plrs[i]);
+	for _, model in playersChars:GetChildren() do
+		createObject(model)
 	end
 
-	EspInterface.playerAdded = players.PlayerAdded:Connect(createObject);
-	EspInterface.playerRemoving = players.PlayerRemoving:Connect(removeObject);
-	EspInterface._hasLoaded = true;
+	EspInterface.playerAdded = playersChars.ChildAdded:Connect(createObject)
+	EspInterface.playerRemoving = playersChars.ChildRemoved:Connect(removeObject)
+	EspInterface._hasLoaded = true
 end
 
 function EspInterface.Unload()
@@ -702,13 +702,13 @@ end
 local playersChars = workspace.Viewmodels
 local localViewmodel = playersChars:FindFirstChild("LocalViewmodel")
 
-function EspInterface.isFriendly(player)
+function EspInterface.isFriendly(model)
 	local head = model:FindFirstChild("head")
 	if not head then return false end
 	return head:FindFirstChild("Username") ~= nil
 end
 
-function EspInterface.getTeamColor(player)
+function EspInterface.getTeamColor(model)
 	if isFriendly(model) then
 		return Color3.fromRGB(0, 100, 255)
 	else
@@ -716,24 +716,25 @@ function EspInterface.getTeamColor(player)
 	end
 end
 
-function EspInterface.getCharacter(player)
+function EspInterface.getCharacter(model)
 	return model
 end
 
-function EspInterface.getWeapon(player)
-	for i, v in player:GetChildren() do
+function EspInterface.getWeapon(model)
+	for _, v in model:GetChildren() do
 		if v:IsA("Model") and game:GetService("CollectionService"):HasTag(v, "Gun") then
-			return v.Name;
+			return v.Name
+		end
 	end
+	return "Unknown"
 end
 
-function EspInterface.getHealth(player)
-	local character = player and EspInterface.getCharacter(player);
-	local humanoid = character and findFirstChildOfClass(character, "Humanoid");
+function EspInterface.getHealth(model)
+	local humanoid = model and findFirstChildOfClass(model, "Humanoid")
 	if humanoid then
-		return humanoid.Health, humanoid.MaxHealth;
+		return humanoid.Health, humanoid.MaxHealth
 	end
-	return 100, 100;
+	return 100, 100
 end
 
 return EspInterface;
