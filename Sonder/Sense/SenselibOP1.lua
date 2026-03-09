@@ -167,7 +167,7 @@ function EspObject:Construct()
 			healthBarOutline = self:_create("Line", { Thickness = 3, Visible = false }),
 			healthBar = self:_create("Line", { Thickness = 1, Visible = false }),
 			healthText = self:_create("Text", { Center = true, Visible = false }),
-			name = self:_create("Text", { Text = self.player.DisplayName, Center = true, Visible = false }),
+			name = self:_create("Text", { Text = self.player.Name, Center = true, Visible = false }),
 			distance = self:_create("Text", { Center = true, Visible = false }),
 			weapon = self:_create("Text", { Center = true, Visible = false }),
 		},
