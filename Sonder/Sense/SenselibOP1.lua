@@ -641,6 +641,8 @@ local EspInterface = {
 		}
 	}
 };
+local playersChars = workspace.Viewmodels
+local localViewmodel = playersChars:FindFirstChild("LocalViewmodel")
 
 function EspInterface.AddInstance(instance, options)
 	local cache = EspInterface._objectCache;
