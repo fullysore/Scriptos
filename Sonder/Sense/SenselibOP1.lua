@@ -655,6 +655,8 @@ function EspInterface.AddInstance(instance, options)
 end
 
 function EspInterface.Load()
+	local playersChars = workspace.Viewmodels
+	local localViewmodel = playersChars:FindFirstChild("LocalViewmodel")
 	assert(not EspInterface._hasLoaded, "Esp has already been loaded.")
 
 	local function createObject(model)
