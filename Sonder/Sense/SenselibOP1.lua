@@ -698,20 +698,33 @@ function EspInterface.Unload()
 end
 
 -- game specific functions
-function EspInterface.getWeapon(player)
-	return "Unknown";
-end
+
+local playersChars = workspace.Viewmodels
+local localViewmodel = playersChars:FindFirstChild("LocalViewmodel")
 
 function EspInterface.isFriendly(player)
-	return player.Team and player.Team == localPlayer.Team;
+	local head = model:FindFirstChild("head")
+	if not head then return false end
+	return head:FindFirstChild("Username") ~= nil
 end
 
 function EspInterface.getTeamColor(player)
-	return player.Team and player.Team.TeamColor and player.Team.TeamColor.Color;
+	if isFriendly(model) then
+		return Color3.fromRGB(0, 100, 255)
+	else
+		return Color3.fromRGB(255, 0, 0)
+	end
 end
 
 function EspInterface.getCharacter(player)
-	return player.Character;
+	return model
+end
+
+function EspInterface.getWeapon(player)
+	for i, v in player:GetChildren() do
+		if v:IsA("Model") and game:GetService("CollectionService"):HasTag(v, "Gun") then
+			return v.Name;
+	end
 end
 
 function EspInterface.getHealth(player)
