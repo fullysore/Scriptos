@@ -78,9 +78,9 @@ local Library do
         FadeSpeed = 0.2,
 
         Folders = {
-            Directory = "scoot",
-            Configs = "scoot/Configs",
-            Assets = "scoot/Assets",
+            Directory = _G.Dir or "scoot",
+            Configs = _G.Dir and _G.Dir.."/Configs" or "scoot/Configs",
+            Assets = _G.Dir and _G.Dir.."/Assets" or "scoot/Assets",
         },
 
         Images = {
