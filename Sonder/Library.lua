@@ -1236,6 +1236,7 @@ local Library do
                         Name = "\0",
                         VerticalAlignment = Enum.VerticalAlignment.Center,
                         FillDirection = Enum.FillDirection.Horizontal,
+						HorizontalFlex = Enum.UIFlexAlignment.Fill,
                         Padding = UDimNew(0, 12),
                         SortOrder = Enum.SortOrder.LayoutOrder
                     })
