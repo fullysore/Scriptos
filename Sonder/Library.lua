@@ -4641,7 +4641,7 @@ local Library do
                     BorderSizePixel = 0,
                     BackgroundTransparency = 1,
                     TextXAlignment = Enum.TextXAlignment.Left,
-                    Size = UDim2New(0, 0, 0, 20),
+                    Size = UDim2New(1, 0, 0, 20),
                     ZIndex = 1,
                     TextSize = 13,
                     BackgroundColor3 = FromRGB(255, 255, 255)
