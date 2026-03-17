@@ -1398,7 +1398,7 @@ local Library do
                     Text = "",
                     AutoButtonColor = false,
                     BackgroundTransparency = 1,
-                    Size = UDim2New(0, 0, 0, 20),
+                    Size = UDim2New(1, 0, 0, 20),
                     BorderSizePixel = 2,
                     TextSize = 14,
                     BackgroundColor3 = FromRGB(25, 30, 26)
@@ -1531,19 +1531,7 @@ local Library do
                     SubPage.ColumnsData[Index] = NewColumn
                 end
 
-                local Count = 0
-                for i, v in Data.Page.Items["SubPages"].Instance:GetChildren() do
-                    if (v:IsA("TextButton")) then
-                        Count += 1
-                    end
-                end
-
-                for i, v in Data.Page.Items["SubPages"].Instance:GetChildren() do
-                    if (v:IsA("TextButton")) then
-                        v.Size = UDim2New(0.945 / Count, 0, 0, 20)
-                    end
-                end
-            end
+                
 
             local Debounce = false
 
