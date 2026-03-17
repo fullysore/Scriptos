@@ -1530,9 +1530,7 @@ local Library do
 
                     SubPage.ColumnsData[Index] = NewColumn
                 end
-
-                
-
+			end
             local Debounce = false
 
             Library.SearchItems[SubPage] = { }
