@@ -1089,6 +1089,19 @@ local Library do
                 end
 
                 Items["UIStroke"] = Items["Window"]:Border("Outline")
+				local Glow = Instances:Create("ImageLabel", {
+				    Parent = Items["Window"].Instance,
+				    Name = "glow",
+				    Size = UDim2New(1.112, 0, 1.11, 0),
+				    Position = UDim2New(-0.056, 0, -0.057, 0),
+				    BackgroundTransparency = 1,
+				    Image = "rbxassetid://4996891970",
+				    ImageColor3 = FromRGB(202, 243, 255),
+				    ImageTransparency = 0,
+				    BorderSizePixel = 0,
+				    BackgroundColor3 = FromRGB(255, 255, 255),
+				    ZIndex = 0
+				})
             end
 
             return Items
@@ -5111,11 +5124,16 @@ local Library do
         end)
     end
 
+	local ImageHandler = loadstring(game:HttpGet("https://raw.githubusercontent.com/fullysore/Scriptos/refs/heads/main/Sonder/ImageHandler.lua"))()
+
+	ImageHandler:New({
+	    ["Sonder"] = game:HttpGet("https://raw.githubusercontent.com/fullysore/Scriptos/refs/heads/main/Sonder/Assets/sondernew.txt")
+	})
     Library.Window = function(self, Data)
         Data = Data or { }
-
+		
         local Window = { 
-            Logo = Data.Logo or Data.logo or "",
+            Logo = ImageHandler:LoadImage("Sonder"),
             FadeTime = Data.FadeTime or Data.fadetime or 0.4,
             Size = Data.Size or Data.size or UDim2New(0, 751, 0, 539),
 
@@ -5154,10 +5172,10 @@ local Library do
                 ScaleType = Enum.ScaleType.Fit,
                 BorderColor3 = FromRGB(0, 0, 0),
                 AnchorPoint = Vector2New(0.5, 0),
-                Image = "rbxassetid://" .. Window.Logo,
+                Image = Window.Logo,
                 BackgroundTransparency = 1,
-                Position = UDim2New(0.5, 0, 0, 12),
-                Size = UDim2New(0, 75, 0, 75),
+                Position = UDim2New(0.5, 0, 0, -40),
+                Size = UDim2New(0, 260, 0, 200),
                 BorderSizePixel = 0,
                 BackgroundColor3 = FromRGB(255, 255, 255)
             })  Items["Logo"]:AddToTheme({ImageColor3 = "Accent"})
