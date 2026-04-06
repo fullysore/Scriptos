@@ -20,7 +20,7 @@ local Library do
     local CoreGui = cloneref and cloneref(game:GetService("CoreGui")) or game:GetService("CoreGui")
     local TweenService = game:GetService("TweenService")
 
-    gethui = function()
+    gethui = gethui or function()
         return CoreGui
     end
 
