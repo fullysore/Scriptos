@@ -20,9 +20,7 @@ local Library do
     local CoreGui = cloneref and cloneref(game:GetService("CoreGui")) or game:GetService("CoreGui")
     local TweenService = game:GetService("TweenService")
 
-    gethui = gethui or function()
-        return CoreGui
-    end
+    gethui = CoreGui
 
     local LocalPlayer = Players.LocalPlayer
     local Camera = Workspace.CurrentCamera
